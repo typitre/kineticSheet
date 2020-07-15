@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
+
+.sheet-outerBox {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.sheet-selectBox {
+  font-size: 1em;
+  height: fit-content;
+  font-weight: 600;
+  width: 110px;
+}
+
+.sheet-charName {
+  font-size: 1.4em;
+  height: fit-content;
+  margin-bottom: 10px;
+  font-weight: 600;
+  width: 350px;
+}
+
+input[type="text"].sheet-charName {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color : #1F2D3D; 
+  color:  #F9FAFC;
+}
+
+input[type="number"].sheet-input, textarea {
+  color: black;
+  font-size: 1.4em;
+  font-weight: 600;
+  width: 50px;
+}
+
+input[type="number"].sheet-smallerNumbers, textarea {
+  width: 30px;
+  font-size: 1em;
+  text-align: center;
+}
+
+input[type=number].sheet-smallerNumbers::-webkit-inner-spin-button, 
+input[type=number].sheet-smallerNumbers::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type="number"].sheet-pushColor, textarea {
+
+  background-color : #1FB6FF; 
+
+}
+
+input[type="number"].sheet-braceColor, textarea {
+
+  background-color : #FF4949; 
+
+}
+
+input[type="number"].sheet-greyColor, textarea {
+
+  background-color : #F9FAFC; 
+
+}
+
+input[type="number"].sheet-purpleColor, textarea {
+
+  background-color : #A389F4; 
+  text-align: center;
+
+}
+
+input[type=number].sheet-purpleColor::-webkit-inner-spin-button, 
+input[type=number].sheet-purpleColor::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.sheet-statsOuterBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.sheet-col2Stats {
+  padding-left: 50px;
+}
+
+input[type="number"].sheet-general-pool, textarea {
+  color: black;
+  font-size: 1.2em;
+  font-weight: 600;
+  width: 50px;
+}
+
+.sheet-clear-button {
+  padding: 5px 5px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+
+
+
+
+/* ROLL TEMPLATES BELOW: */
+
+/* Smaller margins - remove these if you want the huge default left margin */
+.sheet-rolltemplate-custom {
+  margin-left: 0px;
+}
+.withoutavatars .sheet-rolltemplate-custom {
+  margin-left: 0px;
+}
+
+.sheet-rolltemplate-custom .sheet-container {
+  border: 1px solid;
+  /* by default, the border is the same color as the header. You can change this here, e.g. to black */
+  border-color: var(--header-bg-color);
+}
+
+/* Header formatting - title and subtitle */
+.sheet-rolltemplate-custom .sheet-header {
+  background-color: var(--header-bg-color);
+  /* change text-align to center to center the header text */
+  text-align: center;
+  color: var(--header-text-color);
+  padding: 5px;
+}
+.sheet-rolltemplate-custom .sheet-title {
+  font-family: 'Work Sans';
+  font-size:1.2em;
+}
+.sheet-rolltemplate-custom .sheet-subtitle {
+  font-family: 'Work Sans';
+  font-size:1em;
+}
+
+.sheet-rolltemplate-custom .sheet-subsubtitle {
+  padding-top: 15px;
+  font-family: 'Work Sans';
+  font-size:1.1em;
+}
+
+/* example colors */
+.sheet-rolltemplate-custom .sheet-container {
+  /* this is the default color */
+  --header-bg-color: rgb(34, 34, 34);
+  --header-text-color: #FFF;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-push {
+  --header-bg-color: #1FB6FF;
+  --header-text-color: #000;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-brace {
+  --header-bg-color: #FF4949;
+  --header-text-color: #000;
+}
+
+/* Allprops part */
+.sheet-rolltemplate-custom .sheet-content {
+  display: grid;
+  background: #FFF;
+  /* Header formatting - modify the column layout below */
+  grid-template-columns: auto auto;
+  /* Line height to match default roll template */
+  line-height:1.4em;
+}
+.sheet-rolltemplate-custom .sheet-content > div {
+  padding: 5px;
+}
+
+/* Left column */
+.sheet-rolltemplate-custom .sheet-content .sheet-key {
+  font-family: 'Work Sans';
+  font-weight: 600;
+  padding-right: 5px;
+  text-align: right;
+}
+
+.sheet-rolltemplate-custom .sheet-value {
+  font-family: 'Work Sans';
+}
+
+/* Make even-numbered rows grey */
+.sheet-rolltemplate-custom .sheet-content :nth-child(4n+3),
+.sheet-rolltemplate-custom .sheet-content :nth-child(4n) {
+  background:#EEE;
+}
+
+/* Description field */
+.sheet-rolltemplate-custom .sheet-desc {
+  grid-column: span 2;
+  padding: 5px;
+  text-align: center;
+}

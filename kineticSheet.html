@@ -1,0 +1,163 @@
+<input type="text" class="sheet-input sheet-charName" name="attr_character_name"/><br>
+
+<div class="sheet-statsOuterBox">
+  <div class="sheet-col1">
+    <div class="sheet-outerBox">
+      <select name="attr_firstBonus" class="sheet-selectBox">
+        <option value="0">Soldier</option>
+        <option value="1">Scout</option>
+        <option value="2">Medicus</option>
+        <option value="3">Officer</option>
+        <option value="4">Engineer</option>
+      </select>
+    </div>
+    
+    <div class="sheet-outerBox">
+      <select name="attr_secondBonus" class="sheet-selectBox">
+        <option value="0">Duty</option>
+        <option value="1">Glory</option>
+        <option value="2">Fear</option>
+        <option value="3">Ego</option>
+        <option value="4">Sacrifice</option>
+      </select>
+    </div>
+  </div>
+  <div class="sheet-col2Stats">
+    <div class="sheet-outerBox">
+      <div>Target Number</div>
+      <div><input type="number" class="sheet-input sheet-purpleColor" name="attr_targetNumber" readonly/></div>
+    </div>
+  </div>
+</div>
+
+<div class="statsOuterBox">
+  <div class="col1">
+    <div class="sheet-outerBox">
+      <div>Push Dice:</div>
+      <div><input type="number" class="sheet-input sheet-pushColor" name="attr_pushDice"/></div>
+    </div>
+    <div class="sheet-outerBox">
+      <div>Brace Dice:</div>
+      <div><input type="number" class="sheet-input sheet-braceColor" name="attr_braceDice"/></div>
+    </div>
+    <div class="sheet-outerBox">
+      <div>Dice Pool Size</div>
+      <div><input type="number" class="sheet-input" name="attr_totalDice" value="(@{pushDice} + @{braceDice})"></div>
+    </div>
+  </div>
+  <div class="col2Stats">
+    <br>
+    <div class="sheet-outerBox">
+      <button type="roll" name="roll_reckless" value="&{template:custom} {{color=push}} {{subtitle=*@{roleName} + @{motiviationName}* (**@{targetNumber}**)}} {{title=**@{character_name}**}} {{Push (@{pushDice})=[[{(1+@{pushDice})d10ro>[[@{targetNumber}+1]]cf0cs11}<@{targetNumber}]] *hits*}} {{Brace (@{braceDice})=[[(1+@{braceDice})d10<@{targetNumber}cf0cs11]] *blocks*}}" name="roll_recklessRoll"></button>
+      Pushing Roll
+    </div>
+    <br>
+    <div class="sheet-outerBox">
+      <button type="roll" name="roll_careful" value="&{template:custom} {{color=brace}} {{subtitle=*@{roleName} + @{motiviationName}* (**@{targetNumber}**)}} {{title=**@{character_name}**}} {{push (@{pushDice})=[[(1+@{pushDice})d10<@{targetNumber}cf0cs11]] *hits*}} {{brace (@{braceDice})=[[{(1+@{braceDice})d10ro>[[@{targetNumber}+1]]cf0cs11}<@{targetNumber}]] *blocks*}}" name="roll_carefulRoll"></button>
+      Bracing Roll
+    </div>
+    <br>
+    <div class="sheet-outerBox">
+      <button type="roll" name="roll_general" value="&{template:custom} {{color=general}} {{subtitle=*@{roleName} + @{motiviationName}* (**@{targetNumber}**)}} {{title=**@{character_name}**}}  {{General (@{totalDice})=[[{(2+@{totalDice})d10ro>[[@{targetNumber}+1]]cf0cs11}<@{targetNumber}]] *hits & blocks*}}" name="roll_generalRoll"></button>
+      General Pool
+    </div>
+  </div>
+</div>
+<br>
+<div class="sheet-outbox">
+  <button type="action" name="act_clear" class="sheet-clear-button">Clear All Pools</button>
+</div>
+
+<br>
+<div class="sheet-statsOuterBox sheet-outerBox">
+  <div class="sheet-colStats">
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_soldier"/> Soldier<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_scout"/> Scout<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_medicus"/> Medicus<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_officer"/> Officer<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_engineer"/> Engineer<br>
+  </div>
+  <div class="sheet-col2Stats sheet-smallerNumbers">
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_duty"/> Duty<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_glory"/> Glory<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_fear"/> Fear<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_ego"/> Ego<br>
+    <input type="number" class="sheet-input sheet-smallerNumbers" name="attr_sacrifice"/> Sacrifice<br>
+  </div>
+</div>
+
+<script type="text/worker">
+  on("change:firstbonus change:secondbonus sheet:opened", function() {  
+    getAttrs(["firstBonus","secondBonus","soldier","scout","medicus","officer","engineer","duty","glory","fear","ego","sacrifice"], function(values) {
+  
+      let soldierStat = parseInt(values.soldier)||0;
+      let scoutStat = parseInt(values.scout)||0;
+      let medicusStat = parseInt(values.medicus)||0;
+      let officerStat = parseInt(values.officer)||0;
+      let engineerStat = parseInt(values.engineer)||0;
+  
+      let dutyStat = parseInt(values.duty)||0;
+      let gloryStat = parseInt(values.glory)||0;
+      let fearStat = parseInt(values.fear)||0;
+      let egoStat = parseInt(values.ego)||0;
+      let sacrificeStat = parseInt(values.sacrifice)||0;
+  
+      let roleArray = [soldierStat,scoutStat,medicusStat,officerStat,engineerStat]
+      let motivationArray = [dutyStat,gloryStat,fearStat,egoStat,sacrificeStat]
+  
+      let firstBonusPosition = parseInt(values.firstBonus)||0;
+      let secondBonusPosition = parseInt(values.secondBonus)||0;
+  
+      let roleNameArray = ["Soldier","Scout","Medicus","Officer","Engineer"];
+      let motivationNameArray = ["Duty","Glory","Fear","Ego","Sacrifice"];
+      
+      let targetFinal = roleArray[firstBonusPosition] + motivationArray[secondBonusPosition];
+      let roleName = roleNameArray[firstBonusPosition];
+      let motivationName = motivationNameArray[secondBonusPosition];
+  
+      setAttrs({                            
+        "targetNumber": targetFinal,
+        "roleName": roleName,
+        "motiviationName": motivationName
+      });
+    });
+  });
+  
+  on("change:pushdice change:bracedice sheet:opened", function() {
+    getAttrs(["pushDice","braceDice"], function(values) {
+      let push = parseInt(values.pushDice);
+      let brace = parseInt(values.braceDice);
+  
+      let total = push + brace;
+  
+      setAttrs({
+        "totalDice": total
+      });
+    });
+  })
+  
+  on ("clicked:clear", function() {
+    setAttrs({
+      "pushDice": 0,
+      "braceDice": 0,
+      "totalDice": 0
+    });
+  })
+</script>
+
+<rolltemplate class="sheet-rolltemplate-custom">
+  <div class="sheet-container sheet-color-{{color}}">
+    <div class="sheet-header">
+      {{#title}}<div class="sheet-title">{{title}}</div>{{/title}}
+      {{#subtitle}}<div class="sheet-subtitle">{{subtitle}}</div>{{/subtitle}}
+      {{#subsubtitle}}<div class="sheet-subsubtitle">{{subsubtitle}}</div>{{/subsubtitle}}
+    </div>
+    <div class="sheet-content">
+      {{#allprops() title subtitle subsubtitle desc color}}
+      <div class="sheet-key">{{key}}</div>
+      <div class="sheet-value">{{value}}</div>
+      {{/allprops() title subtitle subsubtitle desc color}}
+      {{#desc}}<div class="sheet-desc">{{desc}}</div>{{/desc}}
+    </div>
+  </div>
+</rolltemplate>
